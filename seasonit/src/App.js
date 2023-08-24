@@ -43,10 +43,16 @@ function App() {
 
   // Removes items from the shopping list and re-renderes the produceList
   function deleteFromShoppingList(itemName) {
+    if (shoppingList.length === 1) {
+      setMessage('Shopping list is empty')
+      setPlaceholder(true)
+    } else {
     setShoppingList((prev) => prev.filter((item) => item.name !== itemName))
     setProduceList((prevProduceList) =>
       prevProduceList.filter((item) => item.name !== itemName)
     );
+    }
+    
   }
     
   
