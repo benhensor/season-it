@@ -8,7 +8,7 @@ export function Buttons({ showCurrent, showShoppingList, clearList }) {
     <section id="buttons">
 
       <button id="current" onClick={showCurrent}>
-      <span>Show Produce</span>
+      <span>View Current</span>
       </button>
 
       <button id="shopping" onClick={showShoppingList}>
