@@ -3,7 +3,7 @@ import './buttons.css'
 
 export function Buttons({ showCurrent, showShoppingList, clearList }) {
 
-
+ 
   return (
     <section id="buttons">
 
