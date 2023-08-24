@@ -103,7 +103,7 @@ function App() {
     setProduceList([])
     const select = document.querySelector('select')
     select.selectedIndex = 0
-    setMessage('')
+    setMessage('Select an option above')
     
     setProduceListDisplay(false)
     setSelectedItem([])
