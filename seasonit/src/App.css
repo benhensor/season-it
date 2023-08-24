@@ -22,6 +22,7 @@ main {
 #message {
   height: 4.3rem;
   font-size: 1.6rem;
+  font-weight: 300;
   padding: 1rem 0;
   color: #eee;
   margin-left: 1rem;

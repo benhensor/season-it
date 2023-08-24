@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { formatData } from './formatData'
 import Header from './components/header/Header'
 import NavBar from './components/nav/NavBar'
@@ -31,12 +31,14 @@ function App() {
   const [selectedItem, setSelectedItem] = useState([])
   // Toggle for switching between seasonal produce and the shopping list
   const [produceListDisplay, setProduceListDisplay] = useState(false)
+  // Set visibility of placeholder image in display 
+  const [placeholder, setPlaceholder] = useState(true)
 
 
   // Set the seasonal produce for the current month
-  useEffect(() => {
-      setProduceList(formatData(currentMonth))
-  }, [currentMonth])
+  // useEffect(() => {
+  //     setProduceList(formatData(currentMonth))
+  // }, [currentMonth])
 
 
   // Removes items from the shopping list and re-renderes the produceList
@@ -55,7 +57,7 @@ function App() {
     setProduceListDisplay(false)
     const select = document.querySelector('select')
     select.selectedIndex = 0
-    // console.log('clicked')
+    setPlaceholder(false)
   }
 
 
@@ -65,13 +67,16 @@ function App() {
     setCurrentMonth(selectedValue)
     setProduceList(formatData(selectedValue))
     setProduceListDisplay(false)
+    setPlaceholder(false)
   }
 
 
   function shoppingListMessage(shoppingList) {
     if (shoppingList.length === 0) {
+      setPlaceholder(true)
       return 'Shopping list is empty'
     } else {
+      setPlaceholder(false)
       return 'Shopping List'
     }
   }
@@ -83,17 +88,20 @@ function App() {
     // setProduceList(shoppingList)
     setProduceListDisplay(true)
     setSelectedItem([])
+    setProduceList([])
   }
 
 
   // Clears the current display 
   function clearList() {
+    setProduceList([])
     const select = document.querySelector('select')
     select.selectedIndex = 0
     setMessage('')
-    setProduceList([])
+    
     setProduceListDisplay(false)
     setSelectedItem([])
+    setPlaceholder(true)
   }
 
 
@@ -148,8 +156,9 @@ function App() {
           months={months}
           showMonthly={showMonthly}
         />
-        <h1 id="message">{message}</h1>
         <Display
+          message={message}
+          placeholder={placeholder}
           produceList={produceList}
           shoppingList={shoppingList}
           selectedItem={selectedItem}

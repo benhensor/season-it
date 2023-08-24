@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import './display.css'
 import ProduceCard from '../producecard/ProduceCard'
 import ShoppingCard from '../shoppingcard/ShoppingCard'
+import Image from '../../assets/seasons-banner3.jpeg'
 
 
-export function Display({ produceList, shoppingList, selectedItem, selectItem, produceListDisplay, deleteFromShoppingList }) {
+export function Display({ message, placeholder, produceList, shoppingList, selectedItem, selectItem, produceListDisplay, deleteFromShoppingList }) {
 
 
   const [markedItems, setMarkedItems] = useState([])
@@ -40,6 +41,11 @@ export function Display({ produceList, shoppingList, selectedItem, selectItem, p
 
   return (
     <section id="display">
+    <div id="message-container">
+    <h1 id="message">{message}</h1>
+    </div>
+    <img className={`display-placeholder ${placeholder ? 'visible' : ''}`} src={Image} alt="Fruit & Veg" />
+    
       {!produceListDisplay ? (
         <article className="display-list scrollable-list">
           {localProduceList.length > 0 && (
@@ -55,7 +61,9 @@ export function Display({ produceList, shoppingList, selectedItem, selectItem, p
             </>
           )}
         </article>
+
       ) : (
+
         <article className="display-list scrollable-list">
           {localShoppingList.length > 0 && (
             <>
