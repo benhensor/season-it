@@ -15,6 +15,7 @@ export function Display({ produceList, shoppingList, selectedItem, selectItem, p
   useEffect(() => {
     setLocalProduceList(produceList)
     setLocalShoppingList(shoppingList)
+    console.log('produceList', produceList[0])
   }, [produceList, shoppingList])
 
 
