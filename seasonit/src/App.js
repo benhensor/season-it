@@ -22,7 +22,7 @@ function App() {
   // Sets the current month
   const [currentMonth, setCurrentMonth] = useState(months[currentMonthNumber])
   // Sets the display message to show what's being displayed
-  const [message, setMessage] = useState(`Seasonal Produce for ${currentMonth}` )
+  const [message, setMessage] = useState('Select an option above')
   // Sets the data to be passed to the display component
   const [produceList, setProduceList] = useState([])
   // Sets what items the user has selected
