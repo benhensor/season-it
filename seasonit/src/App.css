@@ -1,0 +1,33 @@
+main {
+  margin: 10rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35rem;
+  height: 75rem;
+  overflow: hidden;
+  border-radius: 2.5rem;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+  background-color: #21241f;
+  border: 5px solid #21241f;
+}
+
+#main {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /* padding: 0.5rem; */
+}
+
+#message {
+  height: 4.3rem;
+  font-size: 1.6rem;
+  padding: 1rem 0;
+  color: #eee;
+  margin-left: 1rem;
+}
+
+/* hr {
+  border: 0.5px solid #2cff02;
+  width: 100%;
+} */

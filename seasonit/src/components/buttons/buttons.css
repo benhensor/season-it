@@ -1,0 +1,28 @@
+#buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* background: linear-gradient(
+    to bottom,
+    #2f352f,
+    #191d19
+  ); */
+}
+
+#buttons button {
+  padding: 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #eee;
+  border: 1px solid #2d5e23;
+  border-radius: 0.3rem;
+  background-color: #000000;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#buttons button:hover {
+  border: 1px solid #2cff02;
+  background-color: #00000070;
+  transition: all 0.2s ease-in-out;
+}
