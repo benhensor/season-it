@@ -43,7 +43,7 @@ function App() {
 
   // Removes items from the shopping list and re-renderes the produceList
   function deleteFromShoppingList(itemName) {
-    if (shoppingList.length === 1) {
+    if (shoppingList.length === 0) {
       setMessage('Shopping list is empty')
       setPlaceholder(true)
     } else {
@@ -51,7 +51,7 @@ function App() {
     setProduceList((prevProduceList) =>
       prevProduceList.filter((item) => item.name !== itemName)
     );
-    }
+  }
     
   }
     
@@ -144,7 +144,7 @@ function App() {
   function selectItem(e, produce) {
     addToShoppingList(e, produce)
     addToSelected(produce.name)
-    console.log('clicked')
+    // console.log('clicked')
   }
 
 

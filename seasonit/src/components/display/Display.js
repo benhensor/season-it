@@ -16,8 +16,9 @@ export function Display({ message, placeholder, produceList, shoppingList, selec
   useEffect(() => {
     setLocalProduceList(produceList)
     setLocalShoppingList(shoppingList)
-    console.log('produceList', produceList[0])
+    //console.log('produceList', produceList[0])
   }, [produceList, shoppingList])
+
 
 
   function toggleMarked(item) {
