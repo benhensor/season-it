@@ -24,17 +24,17 @@ export const ShoppingListProvider = ({ children }) => {
     // Functions to update the shopping list
     const addToShoppingList = (item) => {
         setShoppingList((prevList) => [...prevList, item])
-        console.log(`Added ${item.name} to shopping list`)
+        // console.log(`Added ${item.name} to shopping list`)
       };
 
     const removeFromShoppingList = (itemName) => {
         setShoppingList((prevList) => prevList.filter((item) => item.name !== itemName))
-        console.log(`Removed ${itemName} from shopping list`)
+        // console.log(`Removed ${itemName} from shopping list`)
     }
 
     const clearShoppingList = () => {
         setShoppingList([])
-        console.log('Shopping list cleared')
+        // console.log('Shopping list cleared')
     }
 
     return (
