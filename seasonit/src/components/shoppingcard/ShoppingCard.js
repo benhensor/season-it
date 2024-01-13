@@ -1,15 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './shoppingcard.css'
 
 export function ShoppingCard({ produce, markedItems, toggleMarked, removeItem }) {
 
-  // const isItemSelected = selectedItem.includes(produce.name)
   const isMarked = markedItems.includes(produce.name)
-
-
-  useEffect(() => {
-    console.log('markedItems', markedItems)
-  }, [markedItems])
 
   return (
     <section 
@@ -27,7 +21,6 @@ export function ShoppingCard({ produce, markedItems, toggleMarked, removeItem })
           <div id="shopping-list-btns">
           <button 
             id="done"
-            // onClick={() => toggleMarked(produce)}
           >
             {markedItems.includes(produce.name) ? 'Undo' : 'Mark done'}
           </button>

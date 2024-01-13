@@ -5,16 +5,13 @@ import './header.css'
 const Header = () => {
   return (
     <header>
-      <article>
-
+      <div className='header-container'>
           <img src={Logo} alt="logo" />
-          <div id="titles">
+          <div className="titles">
           <h1>SeasonIt!</h1>
           <h2>Eat more seasonal produce</h2>
           </div>
-
-      </article>
-
+      </div>
     </header>
   )
 }

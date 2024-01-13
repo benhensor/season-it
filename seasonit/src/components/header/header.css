@@ -7,7 +7,7 @@ header {
   padding: 0.5rem;
 }
 
-header article {
+.header-container {
   display: flex;
   align-items: flex-end;
   width: 100%;
@@ -19,18 +19,18 @@ header img {
   object-fit: cover;
 }
 
-header #titles {
+.titles {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
-header article h1 {
+header h1 {
   font-size: 2rem;
   margin-left: 1rem;
 }
 
-header article h2 {
+header h2 {
   font-size: 1.4rem;
   margin-left: 1rem;
 }

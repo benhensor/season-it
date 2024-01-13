@@ -10,20 +10,20 @@ export function SelectMonth({ months, showMonthly }) {
 
 
   return (
-    <article id="select">
-    <form action="">
-      <select
-          name="date"
-          type="date"
-          onChange={(e) => showMonthly(e.target.value)}
-      >
-          <option value="">Select a month</option>
-          {excludeFinalIndex.map((month, index) => (
-            <option key={index} value={month.value}>{month}</option>
-          ))}
-      </select>
+    <div className="select-container">
+      <form action="">
+        <select
+            name="date"
+            type="date"
+            onChange={(e) => showMonthly(e.target.value)}
+        >
+            <option value="">Select a month</option>
+            {excludeFinalIndex.map((month, index) => (
+              <option key={index} value={month.value}>{month}</option>
+            ))}
+        </select>
       </form>
-    </article>
+    </div>
   )
 }
 

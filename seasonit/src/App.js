@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { formatData } from './formatData'
 import Header from './components/header/Header'
 import NavBar from './components/nav/NavBar'
 import Display from './components/display/Display'
+import { formatData } from './formatData'
+import { useShoppingList } from './context/ShoppingListContext'
+import { useProduceList } from './context/ProduceListContext'
 import './App.css';
+import MessageDisplay from './components/messagedisplay/MessageDisplay'
 
 
 
@@ -11,22 +14,18 @@ import './App.css';
 
 function App() {
 
-
   // Get current month and convert to name
   const date = new Date();
   const currentMonthNumber = date.getMonth();
   const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', '' ];
-  // console.log(currentMonth);
 
+  const { updateProduceList } = useProduceList();
+  const { shoppingList, addToShoppingList, removeFromShoppingList, clearShoppingList } = useShoppingList();
 
   // Sets the current month
   const [currentMonth, setCurrentMonth] = useState(months[currentMonthNumber])
   // Sets the display message to show what's being displayed
   const [message, setMessage] = useState('Select an option above')
-  // Sets the data to be passed to the display component
-  const [produceList, setProduceList] = useState([])
-  // Sets what items the user has selected
-  const [shoppingList, setShoppingList] = useState([])
   // Tracks selected items for styling
   const [selectedItem, setSelectedItem] = useState([])
   // Toggle for switching between seasonal produce and the shopping list
@@ -34,32 +33,25 @@ function App() {
   // Set visibility of placeholder image in display 
   const [placeholder, setPlaceholder] = useState(true)
 
-
-  // Set the seasonal produce for the current month
-  // useEffect(() => {
-  //     setProduceList(formatData(currentMonth))
-  // }, [currentMonth])
-
-
-  // Removes items from the shopping list and re-renderes the produceList
-  function deleteFromShoppingList(itemName) {
-    if (shoppingList.length === 0) {
+  // Removes items from the shopping list and re-renders the produceList
+  function handleRemoveFromShoppingList(itemName) {
+    if (shoppingList.length === 1 && shoppingList[0].name === itemName) {
       setMessage('Shopping list is empty')
       setPlaceholder(true)
+      clearShoppingList()
     } else {
-    setShoppingList((prev) => prev.filter((item) => item.name !== itemName))
-    setProduceList((prevProduceList) =>
-      prevProduceList.filter((item) => item.name !== itemName)
-    );
-  }
-    
+      removeFromShoppingList((itemName))
+      // setProduceList((prevProduceList) =>
+      //   prevProduceList.filter((item) => item.name !== itemName)
+      // );
+    }
   }
     
   
   // Displays seasonal produce for the current month
   function showCurrent() {
     setMessage(`Seasonal Produce for ${months[currentMonthNumber]}`)
-    setProduceList(formatData(months[currentMonthNumber]))
+    updateProduceList(formatData(months[currentMonthNumber]))
     setProduceListDisplay(false)
     const select = document.querySelector('select')
     select.selectedIndex = 0
@@ -71,12 +63,13 @@ function App() {
   function showMonthly(selectedValue) {
     setMessage(`Seasonal Produce for ${selectedValue}`)
     setCurrentMonth(selectedValue)
-    setProduceList(formatData(selectedValue))
+    updateProduceList(formatData(selectedValue))
     setProduceListDisplay(false)
     setPlaceholder(false)
   }
 
 
+  // Displays the shopping list message
   function shoppingListMessage(shoppingList) {
     if (shoppingList.length === 0) {
       setPlaceholder(true)
@@ -91,36 +84,32 @@ function App() {
   // Displays the shopping list
   function showShoppingList() {
     setMessage(shoppingListMessage(shoppingList))
-    // setProduceList(shoppingList)
     setProduceListDisplay(true)
     setSelectedItem([])
-    setProduceList([])
+    updateProduceList([])
   }
 
 
   // Clears the current display 
   function clearList() {
-    setProduceList([])
+    updateProduceList([])
     const select = document.querySelector('select')
     select.selectedIndex = 0
     setMessage('Select an option above')
-    
     setProduceListDisplay(false)
     setSelectedItem([])
     setPlaceholder(true)
+    clearShoppingList()
   }
 
 
   // Checks for duplicates before adding to shopping list
-  function addToShoppingList(e, produce) {
-    e.preventDefault();
-    const item = produce.name.trim();
-    const tempList = [...shoppingList]
-    if (item) {
-      if (!tempList.some(itemObj => itemObj.name === item)) {  // Check for duplicates based on produce name
-        tempList.push(produce);
-        setShoppingList(tempList);
-      }
+  function handleAddToShoppingList(produce) {
+    const itemName = produce.name.trim()
+    if ( !shoppingList.some(item => item.name === itemName)) {
+      addToShoppingList(produce)
+    } else {
+      setMessage('Item already in shopping list')
     }
   }
 
@@ -141,10 +130,9 @@ function App() {
 
 
   // handles item selection
-  function selectItem(e, produce) {
-    addToShoppingList(e, produce)
+  function selectItem(produce) {
+    handleAddToShoppingList(produce)
     addToSelected(produce.name)
-    // console.log('clicked')
   }
 
 
@@ -154,24 +142,24 @@ function App() {
     <main>
       <section id="main">
         <Header />
-        <NavBar
-          currentMonth={currentMonth}
-          showCurrent={showCurrent}
-          showShoppingList={showShoppingList}
-          clearList={clearList}
-          months={months}
-          showMonthly={showMonthly}
-        />
-        <Display
-          message={message}
-          placeholder={placeholder}
-          produceList={produceList}
-          shoppingList={shoppingList}
-          selectedItem={selectedItem}
-          selectItem={selectItem}
-          produceListDisplay={produceListDisplay}
-          deleteFromShoppingList={deleteFromShoppingList}
-        />
+          <NavBar
+            currentMonth={currentMonth}
+            showCurrent={showCurrent}
+            showShoppingList={showShoppingList}
+            clearList={clearList}
+            months={months}
+            showMonthly={showMonthly}
+          />
+          <MessageDisplay message={message} />
+          <Display
+            message={message}
+            placeholder={placeholder}
+            shoppingList={shoppingList}
+            selectedItem={selectedItem}
+            selectItem={selectItem}
+            produceListDisplay={produceListDisplay}
+            handleRemoveFromShoppingList={handleRemoveFromShoppingList}
+          />
       </section>
     </main>
   );

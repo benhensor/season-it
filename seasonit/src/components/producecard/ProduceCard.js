@@ -8,10 +8,10 @@ export function ProduceCard({ produce, selectItem, selectedItem }) {
 
 
   return (
-    <section 
+    <div 
       id="produce-card"
       className={`produce-list-item ${isItemSelected ? 'selected' : ''}`}
-      onClick={(e) => selectItem(e, produce)}
+      onClick={() => selectItem(produce)}
     >
       <img src={produce.img} alt={produce.name} />
       <div id="produce-card-text">
@@ -19,14 +19,12 @@ export function ProduceCard({ produce, selectItem, selectedItem }) {
 
           <button
             id="add"
-            //className={`produce-list-item ${isItemSelected ? 'selected' : ''}`}
-            // onClick={(e) => selectItem(e, produce)}
           >
             {isItemSelected ? 'Added to List' : 'Add to List'}
           </button>
       </div>
       
-    </section>
+    </div>
   )
 }
 

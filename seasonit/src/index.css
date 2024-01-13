@@ -12,13 +12,16 @@
   /* outline: 1px solid red; */
 }
 
-body {
+html {
   height: 100vh;
+  scroll-behavior: none;
+}
+
+body {
   background: linear-gradient(
     to bottom,
     #ffffff,
     #d9d9d9
   );
   font-size: 1.6rem;
-  
 }
