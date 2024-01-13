@@ -105,12 +105,7 @@ function App() {
 
   // Checks for duplicates before adding to shopping list
   function handleAddToShoppingList(produce) {
-    const itemName = produce.name.trim()
-    if ( !shoppingList.some(item => item.name === itemName)) {
-      addToShoppingList(produce)
-    } else {
-      setMessage('Item already in shopping list')
-    }
+    addToShoppingList(produce)
   }
 
 
@@ -131,8 +126,13 @@ function App() {
 
   // handles item selection
   function selectItem(produce) {
+    const itemName = produce.name.trim()
+    if (!shoppingList.some(item => item.name === itemName)) {
     handleAddToShoppingList(produce)
     addToSelected(produce.name)
+    } else {
+      setMessage('Item already in shopping list')
+    }
   }
 
 
@@ -152,7 +152,6 @@ function App() {
           />
           <MessageDisplay message={message} />
           <Display
-            message={message}
             placeholder={placeholder}
             shoppingList={shoppingList}
             selectedItem={selectedItem}
