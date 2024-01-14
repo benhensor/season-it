@@ -1,14 +1,28 @@
 import React from 'react'
-import './navbar.css'
+import styled from 'styled-components'
 import Buttons from '../buttons/Buttons'
 import SelectMonth from '../selectmonth/SelectMonth'
 
+const Nav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1rem 0 1rem;
+  gap: 1rem;
+`
 
+const Line = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  border: none;
+  outline: 1px solid #147900;
+`
 
 export function NavBar({ months, showCurrent, showShoppingList, clearList, showMonthly }) {
 
   return (
-    <nav>
+    <Nav>
       <Buttons 
         showCurrent={showCurrent}
         showShoppingList={showShoppingList}
@@ -18,7 +32,8 @@ export function NavBar({ months, showCurrent, showShoppingList, clearList, showM
         months={months}
         showMonthly={showMonthly}
       />
-    </nav>
+      <Line />
+    </Nav>
   )
 }
 

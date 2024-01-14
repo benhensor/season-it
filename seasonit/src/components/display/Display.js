@@ -1,13 +1,56 @@
 import React, { useState, useEffect } from 'react'
 import { useProduceList } from '../../context/ProduceListContext'
 import { useShoppingList } from '../../context/ShoppingListContext'
+import styled from 'styled-components'
 import ProduceCard from '../producecard/ProduceCard'
 import ShoppingCard from '../shoppingcard/ShoppingCard'
 import Image from '../../assets/seasons-banner3.jpeg'
-import './display.css'
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-bottom: 24.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  background-color: #3A452A;
+  position: relative;
+`
+
+const Placeholder = styled.img`
+  position: absolute;
+  display: none;
+  z-index: 0;
+  ${({$visible}) => $visible && `
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: calc(50% + 5rem);
+    z-index: 0;
+  `}
+`
+
+const DisplayWindow = styled.div`
+  width: 100%;
+  z-index: 2;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+`
 
 
-export function Display({ placeholder, selectedItem, selectItem, produceListDisplay, handleRemoveFromShoppingList }) {
+export function Display({ placeholder, selectedItem, selectItem, display, handleRemoveFromShoppingList }) {
 
   const { produceList } = useProduceList()
   const { shoppingList } = useShoppingList()
@@ -19,10 +62,8 @@ export function Display({ placeholder, selectedItem, selectItem, produceListDisp
     if (updateMarkedItems) {
       // Create a set of item names in the shoppingList
       const shoppingListNames = new Set(shoppingList.map((produce) => produce.name));
-
       // Filter the markedItems to keep only those that exist in shoppingListNames
       const updatedMarkedItems = markedItems.filter((itemName) => shoppingListNames.has(itemName));
-
       // Update the markedItems state and reset the update flag
       setMarkedItems(updatedMarkedItems);
       setUpdateMarkedItems(false);
@@ -47,11 +88,11 @@ export function Display({ placeholder, selectedItem, selectItem, produceListDisp
   
 
   return (
-    <div id="display">
-    <img className={`display-placeholder ${placeholder ? 'visible' : ''}`} src={Image} alt="Fruit & Veg" />
+    <Container>
+    <Placeholder $visible={placeholder ? 1 : 0} src={Image} alt="Fruit & Veg" />
     
-      {!produceListDisplay ? (
-        <article className="display-list scrollable-list">
+      {!display ? (
+        <DisplayWindow className="display-list scrollable-list">
           {produceList.length > 0 && (
             <>
               {produceList.map((produce) => (
@@ -64,11 +105,11 @@ export function Display({ placeholder, selectedItem, selectItem, produceListDisp
               ))}
             </>
           )}
-        </article>
+        </DisplayWindow>
 
       ) : (
 
-        <article className="display-list scrollable-list">
+        <DisplayWindow className="display-list scrollable-list">
           {shoppingList.length > 0 && (
             <>
               {shoppingList.map((produce) => (
@@ -83,9 +124,9 @@ export function Display({ placeholder, selectedItem, selectItem, produceListDisp
               ))}
             </>
           )}
-        </article>
+        </DisplayWindow>
       )}
-    </div>
+    </Container>
   )
 }
 

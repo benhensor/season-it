@@ -1,18 +1,55 @@
 import React from 'react'
+import styled from 'styled-components'
 import Logo from '../../assets/logo.png'
-import './header.css'
+
+const StyledHeader = styled.header`
+  width: 100%;
+  display: flex;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  background-color: #eeeeee;
+  padding: 0.5rem;
+`
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`
+
+const LogoImg = styled.img`
+  width: 7rem;
+  height: 7rem;
+  object-fit: cover;
+`
+
+const Titles = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: 1rem;
+`
+
+const Title = styled.h1`
+  font-size: 2rem;
+  
+`
+
+const Tagline = styled.h2`
+  font-size: 1.4rem;
+`
 
 const Header = () => {
   return (
-    <header>
-      <div className='header-container'>
-          <img src={Logo} alt="logo" />
-          <div className="titles">
-          <h1>SeasonIt!</h1>
-          <h2>Eat more seasonal produce</h2>
-          </div>
-      </div>
-    </header>
+    <StyledHeader>
+      <Container>
+          <LogoImg src={Logo} alt="logo" />
+          <Titles>
+          <Title>SeasonIt!</Title>
+          <Tagline>Eat more seasonal produce</Tagline>
+          </Titles>
+      </Container>
+    </StyledHeader>
   )
 }
 

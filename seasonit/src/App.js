@@ -2,36 +2,26 @@ import React, { useState } from 'react'
 import Header from './components/header/Header'
 import NavBar from './components/nav/NavBar'
 import Display from './components/display/Display'
+import Message from './components/message/Message'
 import { formatData } from './formatData'
 import { useShoppingList } from './context/ShoppingListContext'
 import { useProduceList } from './context/ProduceListContext'
 import './App.css';
-import MessageDisplay from './components/messagedisplay/MessageDisplay'
-
-
-
-
 
 function App() {
 
-  // Get current month and convert to name
-  const date = new Date();
-  const currentMonthNumber = date.getMonth();
-  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', '' ];
+  const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
+  // Context
   const { updateProduceList } = useProduceList();
   const { shoppingList, addToShoppingList, removeFromShoppingList, clearShoppingList } = useShoppingList();
 
-  // Sets the current month
-  const [currentMonth, setCurrentMonth] = useState(months[currentMonthNumber])
-  // Sets the display message to show what's being displayed
+  // State
   const [message, setMessage] = useState('Select an option above')
-  // Tracks selected items for styling
   const [selectedItem, setSelectedItem] = useState([])
-  // Toggle for switching between seasonal produce and the shopping list
-  const [produceListDisplay, setProduceListDisplay] = useState(false)
-  // Set visibility of placeholder image in display 
+  const [display, setDisplay] = useState(false)
   const [placeholder, setPlaceholder] = useState(true)
+
 
   // Removes items from the shopping list and re-renders the produceList
   function handleRemoveFromShoppingList(itemName) {
@@ -41,18 +31,15 @@ function App() {
       clearShoppingList()
     } else {
       removeFromShoppingList((itemName))
-      // setProduceList((prevProduceList) =>
-      //   prevProduceList.filter((item) => item.name !== itemName)
-      // );
     }
   }
     
   
   // Displays seasonal produce for the current month
   function showCurrent() {
-    setMessage(`Seasonal Produce for ${months[currentMonthNumber]}`)
-    updateProduceList(formatData(months[currentMonthNumber]))
-    setProduceListDisplay(false)
+    setMessage(`Seasonal Produce for ${currentMonth}`)
+    updateProduceList(formatData(currentMonth))
+    setDisplay(false)
     const select = document.querySelector('select')
     select.selectedIndex = 0
     setPlaceholder(false)
@@ -62,9 +49,8 @@ function App() {
   // Displays seasonal produce based on a chosen month
   function showMonthly(selectedValue) {
     setMessage(`Seasonal Produce for ${selectedValue}`)
-    setCurrentMonth(selectedValue)
     updateProduceList(formatData(selectedValue))
-    setProduceListDisplay(false)
+    setDisplay(false)
     setPlaceholder(false)
   }
 
@@ -84,7 +70,7 @@ function App() {
   // Displays the shopping list
   function showShoppingList() {
     setMessage(shoppingListMessage(shoppingList))
-    setProduceListDisplay(true)
+    setDisplay(true)
     setSelectedItem([])
     updateProduceList([])
   }
@@ -96,7 +82,7 @@ function App() {
     const select = document.querySelector('select')
     select.selectedIndex = 0
     setMessage('Select an option above')
-    setProduceListDisplay(false)
+    setDisplay(false)
     setSelectedItem([])
     setPlaceholder(true)
     clearShoppingList()
@@ -113,7 +99,6 @@ function App() {
   function addToSelected(target) {
     const itemIndex = selectedItem.indexOf(target)
     const tempSelected = [...selectedItem]
-
     if ( itemIndex === -1 ) {
       tempSelected.push(target)
       setSelectedItem(tempSelected)
@@ -127,39 +112,61 @@ function App() {
   // handles item selection
   function selectItem(produce) {
     const itemName = produce.name.trim()
-    if (!shoppingList.some(item => item.name === itemName)) {
+    const currentMonthProduce = formatData(currentMonth)
+    const endsInS = itemName[itemName.length - 1] === 's' ? true : false
+    const previousMessage = message
+    // Check for duplicates
+    if (shoppingList.some(item => item.name === itemName)) {
+      const errorMessage = endsInS ? `${itemName} are already in the shopping list!` : `${itemName} is already in the shopping list!`
+        setMessage(errorMessage)
+
+        setTimeout(() => {
+          setMessage(previousMessage)
+        }, 1000)
+
+        return
+    }
+    // Check if item is in season
+    if (!currentMonthProduce.some(item => item.name === itemName)) {
+      if (endsInS) {
+        setMessage(`${itemName} are not in season`)
+        return
+      } else {
+        setMessage(`${itemName} is not in season`)
+        return
+      }
+    } 
     handleAddToShoppingList(produce)
     addToSelected(produce.name)
-    } else {
-      setMessage('Item already in shopping list')
-    }
   }
-
-
 
 
   return (
     <main>
-      <section id="main">
+      <div className="main">
         <Header />
           <NavBar
             currentMonth={currentMonth}
             showCurrent={showCurrent}
             showShoppingList={showShoppingList}
             clearList={clearList}
-            months={months}
             showMonthly={showMonthly}
           />
-          <MessageDisplay message={message} />
+          <Message
+            message={message}
+            setMessage={setMessage}
+            display={display}
+            clearList={clearList}
+          />
           <Display
             placeholder={placeholder}
             shoppingList={shoppingList}
             selectedItem={selectedItem}
             selectItem={selectItem}
-            produceListDisplay={produceListDisplay}
+            display={display}
             handleRemoveFromShoppingList={handleRemoveFromShoppingList}
           />
-      </section>
+      </div>
     </main>
   );
 }

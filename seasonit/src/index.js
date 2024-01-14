@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ShoppingListProvider } from './context/ShoppingListContext';
 import { ProduceListProvider } from './context/ProduceListContext';
+import GlobalStyles from './styles/GlobalStyles'
 import './index.css';
 import App from './App';
 
@@ -10,6 +11,7 @@ root.render(
   <React.StrictMode>
     <ProduceListProvider>
     <ShoppingListProvider>
+      <GlobalStyles />
       <App />
     </ShoppingListProvider>
     </ProduceListProvider>

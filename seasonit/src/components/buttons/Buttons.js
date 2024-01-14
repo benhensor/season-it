@@ -1,25 +1,49 @@
 import React from 'react'
-import './buttons.css'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const Button = styled.button`
+  width: 10rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 0.3rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  transition: all 0.05s ease-in-out;
+  border: 2px solid #147900;
+  background-color: #212121;
+  color: #eee;
+  &:hover {
+    color: #fff;
+    border: 2px solid #2cff02;
+    background-color: #323e31;
+  }
+  p {
+    font-size: 1.2rem;
+  }
+`
 
 export function Buttons({ showCurrent, showShoppingList, clearList }) {
 
  
   return (
-    <section id="buttons">
-
-      <button id="current" onClick={showCurrent}>
-      <span>View Current</span>
-      </button>
-
-      <button id="shopping" onClick={showShoppingList}>
-      <span>Shopping List</span>
-      </button>
-
-      <button id="clear" onClick={clearList}>
-      <span>Clear</span>
-      </button>
-
-    </section>
+    <Container>
+      <Button onClick={showCurrent}>
+        <p>View Current</p>
+      </Button>
+      <Button onClick={showShoppingList}>
+        <p>Shopping List</p>
+      </Button>
+      <Button onClick={clearList}>
+        <p>Reset</p>
+      </Button>
+    </Container>
   )
 }
 
