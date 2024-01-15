@@ -1,12 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { ShoppingListProvider } from './context/ShoppingListContext';
-import { ProduceListProvider } from './context/ProduceListContext';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { ShoppingListProvider } from './context/ShoppingListContext'
+import { ProduceListProvider } from './context/ProduceListContext'
 import GlobalStyles from './styles/GlobalStyles'
-import './index.css';
-import App from './App';
+import App from './App'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <ProduceListProvider>
@@ -16,4 +15,4 @@ root.render(
     </ShoppingListProvider>
     </ProduceListProvider>
   </React.StrictMode>
-);
+)

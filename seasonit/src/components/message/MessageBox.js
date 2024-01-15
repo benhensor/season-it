@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useShoppingList } from '../../context/ShoppingListContext'
+import { Messages } from '../messages/Messages'
 
 const Container = styled.div`
   display: flex;
@@ -12,18 +13,14 @@ const Container = styled.div`
   z-index: 2;
 `
 
-const MessageH1 = styled.h1`
-  text-align: left;
-  height: 4.3rem;
-  font-size: 1.2rem;
-  font-weight: 300;
-  padding: 1rem 0;
-  color: #eee;
+const Message = styled.div`
+  align-content: left;
 `
 
 const Button = styled.button`
   border: none;
   background-color: transparent;
+  text-wrap: nowrap;
   color: #b8b8b8;
   font-size: 1rem;
   cursor: pointer;
@@ -33,21 +30,21 @@ const Button = styled.button`
   }
 `
 
-function Message({ message, setMessage, display, clearList }) {
+function MessageBox({ message, setMessage, display, reset }) {
 
   const { shoppingList, clearShoppingList } = useShoppingList()
 
   function handleClear() {
     clearShoppingList()
-    setMessage('Shopping list is empty')
+    setMessage(<Messages type='emptyList' />)
     setTimeout(() => {
-      clearList()
-    }, 500)
+      reset()
+    }, 750)
   }
 
   return (
     <Container>
-      <MessageH1>{message}</MessageH1>
+      <Message>{message}</Message>
       {(display && shoppingList.length !== 0) && (
         <Button onClick={() => handleClear()}>Clear List</Button>
       )}
@@ -55,4 +52,4 @@ function Message({ message, setMessage, display, clearList }) {
   )
 }
 
-export default Message
+export default MessageBox

@@ -21,24 +21,54 @@ export const ShoppingListProvider = ({ children }) => {
         localStorage.setItem('shoppingList', JSON.stringify(shoppingList))
     }, [shoppingList])
     
-    // Functions to update the shopping list
-    const addToShoppingList = (item) => {
-        setShoppingList((prevList) => [...prevList, item])
-        // console.log(`Added ${item.name} to shopping list`)
+    // Add item to shopping list
+    const addToShoppingList = (produce) => {
+        // Check if item is already in the shopping list
+        const existingItem = shoppingList.some((listing) => listing.id === produce.id)
+        if (!existingItem) {
+            setShoppingList((prevList) => [...prevList, { id: produce.id, item: produce, marked: false}])
+        // console.log(`Added ${produce.name} to shopping list`)
+        // console.log(shoppingList)
       };
-
-    const removeFromShoppingList = (itemName) => {
-        setShoppingList((prevList) => prevList.filter((item) => item.name !== itemName))
-        // console.log(`Removed ${itemName} from shopping list`)
     }
 
+    // Remove item from shopping list
+    const removeFromShoppingList = (listing) => {
+        // Check if item is already in the shopping list
+        const itemId = listing.item.id
+        setShoppingList((prevList) => prevList.filter((item) => item.item.id !== itemId))
+        // console.log(`Removed ${itemId} from shopping list`)
+    }
+
+    // Clear shopping list
     const clearShoppingList = () => {
         setShoppingList([])
         // console.log('Shopping list cleared')
     }
 
+    // Toggle marked status of item
+    const toggleMarked = (item) => {
+        setShoppingList((prevList) =>
+        prevList.map((listing) => {
+            if (listing.item.name === item.name) {
+                return { ...listing, marked: !listing.marked };
+            }
+            return listing;
+        })
+        );
+    }
+
+    // Clear marked items
+    const clearMarkedItems = () => {
+        setShoppingList((prevList) =>
+        prevList.map((item) => {
+            return { ...item, marked: false };
+        })
+        );
+    }
+
     return (
-        <ShoppingListContext.Provider value={{ shoppingList, addToShoppingList, removeFromShoppingList, clearShoppingList, }}>
+        <ShoppingListContext.Provider value={{ shoppingList, addToShoppingList, removeFromShoppingList, clearShoppingList, toggleMarked, clearMarkedItems }}>
             {children}
         </ShoppingListContext.Provider>
     )

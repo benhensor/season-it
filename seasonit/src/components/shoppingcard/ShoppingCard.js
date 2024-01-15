@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useShoppingList } from '../../context/ShoppingListContext'
 
 const Container = styled.div`
   display: flex;
@@ -55,14 +56,15 @@ const ProduceName = styled.p`
 const Buttons = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 0.5rem;
 `
 
 const Button = styled.button`
   border: none;
   background-color: transparent;
+  text-wrap: nowrap;
   color: #b8b8b8;
   font-size: 1rem;
-  cursor: pointer;
   transition: all 0.05s ease-in-out;
   ${({$id}) => $id === 'mark' && `
     &:hover {
@@ -85,29 +87,35 @@ const Divider = styled.span`
   transition: all 0.05s ease-in-out;
 `
 
-export function ShoppingCard({ produce, markedItems, toggleMarked, removeItem }) {
+export function ShoppingCard({ listing, removeItem }) {
 
-  const isMarked = markedItems.includes(produce.name)
+  const { toggleMarked } = useShoppingList()
+
+  const item = listing.item
+  const isMarked = listing.marked
 
   return (
     <Container
-      $isMarked={isMarked ? 1 : 0}
-      onClick={() => toggleMarked(produce)}
+      $isMarked={isMarked}
+      onClick={() => toggleMarked(item.name)}
     >
       
-        <ShoppingImg src={produce.img} alt={produce.name} />
+        <ShoppingImg src={item.img} alt={item.name} />
       
       <ShoppingText>
-        <ProduceName>{produce.name}</ProduceName>
+        <ProduceName>{item.name}</ProduceName>
 
 
           <Buttons>
-          <Button $id={'mark'}>
-            {markedItems.includes(produce.name) ? 'Undo' : 'Mark done'}
+          <Button 
+            $id={'mark'}
+            onClick={() => toggleMarked(item)}
+          >
+            {isMarked ? 'Undo' : 'Mark done'}
           </Button>
           <Divider>|</Divider>
           <Button $id={'remove'}
-            onClick={() => removeItem(produce)}>
+            onClick={() => removeItem(listing)}>
             Remove
           </Button>
           </Buttons>

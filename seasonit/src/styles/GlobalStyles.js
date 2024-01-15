@@ -1,8 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
+import '../assets/fonts/fonts.css'
 
 const GlobalStyles = createGlobalStyle`
-
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
     :root {
         font-size: 62.5%;
@@ -27,13 +26,9 @@ const GlobalStyles = createGlobalStyle`
             #d9d9d9
         );
     }
-    header {}
-    main {}
-    h1, h2, h3, h4, h5, h6 {}
-    p {
-        font-size: 1.6rem;
+    button {
+        cursor: pointer;
     }
-    button {}
 `
 
 export default GlobalStyles

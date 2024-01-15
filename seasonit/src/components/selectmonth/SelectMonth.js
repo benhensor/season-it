@@ -31,10 +31,9 @@ const Option = styled.option`
   border-radius: 0.3rem;
 `
 
-export function SelectMonth({ showMonthly }) {
+export default function SelectMonth({ showMonthly }) {
 
   const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October','November', 'December', '']
-
   const excludeFinalIndex = months.slice(0, -1)
 
 
@@ -55,5 +54,3 @@ export function SelectMonth({ showMonthly }) {
     </Container>
   )
 }
-
-export default SelectMonth

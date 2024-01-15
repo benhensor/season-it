@@ -55,33 +55,25 @@ const Button = styled.button`
   background-color: transparent;
   color: #b8b8b8;
   font-size: 1rem;
-  cursor: pointer;
-  margin: 0 0 0 0.5rem;
   transition: all 0.05s ease-in-out;
 `
 
-export function ProduceCard({ produce, selectItem, selectedItem }) {
+export default function ProduceCard({ produce, selectItem, selectedItem }) {
 
   const isItemSelected = selectedItem.includes(produce.name)
 
-
-
   return (
     <Container
-      $isItemSelected={isItemSelected ? 1 : 0}
+      $isItemSelected={isItemSelected}
       onClick={() => selectItem(produce)}
     >
       <ProduceImg src={produce.img} alt={produce.name} />
       <ProduceText>
         <ProduceName>{produce.name}</ProduceName>
-
-          <Button>
-            {isItemSelected ? 'Added to List' : 'Add to List'}
-          </Button>
+        <Button>
+          {isItemSelected ? 'Added to List' : 'Add to List'}
+        </Button>
       </ProduceText>
-      
     </Container>
   )
 }
-
-export default ProduceCard;

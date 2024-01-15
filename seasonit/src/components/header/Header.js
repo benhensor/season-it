@@ -39,7 +39,7 @@ const Tagline = styled.h2`
   font-size: 1.4rem;
 `
 
-const Header = () => {
+export default function Header() {
   return (
     <StyledHeader>
       <Container>
@@ -52,5 +52,3 @@ const Header = () => {
     </StyledHeader>
   )
 }
-
-export default Header

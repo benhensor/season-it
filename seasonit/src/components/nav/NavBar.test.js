@@ -7,7 +7,7 @@ jest.mock('../buttons/Buttons', () => (props) => (
   <div>
     <button onClick={props.showCurrent}>View Current</button>
     <button onClick={props.showShoppingList}>Shopping List</button>
-    <button onClick={props.clearList}>Clear</button>
+    <button onClick={props.reset}>Reset</button>
   </div>
 ));
 jest.mock('../selectmonth/SelectMonth', () => (props) => (<div>mock-SelectMonth</div>));
@@ -18,7 +18,7 @@ describe('NavBar Component', () => {
       months: ['January', 'February', 'March'], // Example months array
       showCurrent: jest.fn(),
       showShoppingList: jest.fn(),
-      clearList: jest.fn(),
+      reset: jest.fn(),
       showMonthly: jest.fn(),
     };
 
@@ -27,20 +27,20 @@ describe('NavBar Component', () => {
     // Check if Buttons component is rendered with correct text
     expect(screen.getByText('View Current')).toBeInTheDocument();
     expect(screen.getByText('Shopping List')).toBeInTheDocument();
-    expect(screen.getByText('Clear')).toBeInTheDocument();
+    expect(screen.getByText('Reset')).toBeInTheDocument();
     expect(screen.getByText('mock-SelectMonth')).toBeInTheDocument();
   });
 
   test('interaction with Buttons component', () => {
     const showCurrentMock = jest.fn();
     const showShoppingListMock = jest.fn();
-    const clearListMock = jest.fn();
+    const resetMock = jest.fn();
 
     render(
       <NavBar 
         showCurrent={showCurrentMock} 
         showShoppingList={showShoppingListMock} 
-        clearList={clearListMock} 
+        reset={resetMock} 
         months={[]} 
         showMonthly={() => {}} 
       />
@@ -52,8 +52,8 @@ describe('NavBar Component', () => {
     fireEvent.click(screen.getByText('Shopping List'));
     expect(showShoppingListMock).toHaveBeenCalled();
 
-    fireEvent.click(screen.getByText('Clear'));
-    expect(clearListMock).toHaveBeenCalled();
+    fireEvent.click(screen.getByText('Reset'));
+    expect(resetMock).toHaveBeenCalled();
   });
 
     test('interaction with SelectMonth component', () => {
@@ -62,7 +62,7 @@ describe('NavBar Component', () => {
             <NavBar 
                 showCurrent={() => {}} 
                 showShoppingList={() => {}} 
-                clearList={() => {}} 
+                reset={() => {}} 
                 months={[]} 
                 showMonthly={showMonthlyMock} 
             />

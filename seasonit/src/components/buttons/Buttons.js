@@ -29,7 +29,7 @@ const Button = styled.button`
   }
 `
 
-export function Buttons({ showCurrent, showShoppingList, clearList }) {
+export default function Buttons({ showCurrent, showShoppingList, reset }) {
 
  
   return (
@@ -40,11 +40,9 @@ export function Buttons({ showCurrent, showShoppingList, clearList }) {
       <Button onClick={showShoppingList}>
         <p>Shopping List</p>
       </Button>
-      <Button onClick={clearList}>
+      <Button onClick={reset}>
         <p>Reset</p>
       </Button>
     </Container>
   )
 }
-
-export default Buttons

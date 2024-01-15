@@ -21,11 +21,11 @@ describe('Buttons Component', () => {
   });
 
   test('calls clearList when the clear button is clicked', () => {
-    const clearList = jest.fn();
-    render(<Buttons clearList={clearList} />);
+    const reset = jest.fn();
+    render(<Buttons reset={reset} />);
     
-    fireEvent.click(screen.getByText('Clear'));
-    expect(clearList).toHaveBeenCalled();
+    fireEvent.click(screen.getByText('Reset'));
+    expect(reset).toHaveBeenCalled();
   });
 
 });
