@@ -23,27 +23,21 @@ export const ShoppingListProvider = ({ children }) => {
     
     // Add item to shopping list
     const addToShoppingList = (produce) => {
-        // Check if item is already in the shopping list
         const existingItem = shoppingList.some((listing) => listing.id === produce.id)
         if (!existingItem) {
             setShoppingList((prevList) => [...prevList, { id: produce.id, item: produce, marked: false}])
-        // console.log(`Added ${produce.name} to shopping list`)
-        // console.log(shoppingList)
       };
     }
 
     // Remove item from shopping list
     const removeFromShoppingList = (listing) => {
-        // Check if item is already in the shopping list
         const itemId = listing.item.id
         setShoppingList((prevList) => prevList.filter((item) => item.item.id !== itemId))
-        // console.log(`Removed ${itemId} from shopping list`)
     }
 
     // Clear shopping list
     const clearShoppingList = () => {
         setShoppingList([])
-        // console.log('Shopping list cleared')
     }
 
     // Toggle marked status of item

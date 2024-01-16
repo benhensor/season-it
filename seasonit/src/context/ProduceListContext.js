@@ -21,7 +21,7 @@ export const ProduceListProvider = ({ children }) => {
     // Functions to update the produce list
     const updateProduceList = (array) => {
         setProduceList(array)
-      };
+      };    
 
     return (
         <ProduceListContext.Provider value={{ produceList, updateProduceList }}>

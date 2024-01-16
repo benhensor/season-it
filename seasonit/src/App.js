@@ -34,14 +34,16 @@ export default function App() {
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
   // Context
-  const { updateProduceList } = useProduceList();
+  const { produceList, updateProduceList } = useProduceList();
   const { shoppingList, addToShoppingList, removeFromShoppingList, clearShoppingList } = useShoppingList();
 
   // State
+  const [month, setMonth] = useState(currentMonth)
   const [message, setMessage] = useState(<Messages type='default' />)
   const [selectedItem, setSelectedItem] = useState([])
   const [display, setDisplay] = useState(false)
   const [placeholder, setPlaceholder] = useState(true)
+  const [filteredProduceType, setFilteredProduceType] = useState(null)
 
 
   // Removes items from the shopping list and re-renders the produceList
@@ -64,6 +66,7 @@ export default function App() {
     const select = document.querySelector('select')
     select.selectedIndex = 0
     setPlaceholder(false)
+    setMonth(currentMonth)
   }
 
 
@@ -73,6 +76,7 @@ export default function App() {
     updateProduceList(formatData(selectedMonth))
     setDisplay(false)
     setPlaceholder(false)
+    setMonth(selectedMonth)
   }
 
 
@@ -161,7 +165,6 @@ export default function App() {
   }
 
 
-
   return (
     <Main>
       <Container className="main">
@@ -174,10 +177,13 @@ export default function App() {
             showMonthly={showMonthly}
           />
           <MessageBox
+            month={month}
             message={message}
             setMessage={setMessage}
             Messages={Messages}
+            placeholder={placeholder}
             display={display}
+            setFilteredProduceType={setFilteredProduceType}
             reset={reset}
           />
           <Display
@@ -186,6 +192,7 @@ export default function App() {
             selectedItem={selectedItem}
             selectItem={selectItem}
             display={display}
+            filteredProduceType={filteredProduceType}
             handleRemoveFromShoppingList={handleRemoveFromShoppingList}
           />
       </Container>

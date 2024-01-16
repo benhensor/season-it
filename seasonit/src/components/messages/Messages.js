@@ -19,7 +19,7 @@ const Error = styled.span`
   color: #FF0000;
 `;
 
-export const Messages = ({ type, currentMonth, selectedMonth, itemName }) => {
+export const Messages = ({ type, currentMonth, selectedMonth, itemName, produceType }) => {
   let message;
 
   switch (type) {
@@ -31,6 +31,9 @@ export const Messages = ({ type, currentMonth, selectedMonth, itemName }) => {
       break;
     case 'month':
       message = <Message>Seasonal Produce for <Highlight>{selectedMonth}</Highlight></Message>;
+      break;
+    case 'filter':
+      message = <Message><Highlight>{produceType}</Highlight> in season during {selectedMonth}</Message>;
       break;
     case 'addedEndsInS':
       message = <Message><Highlight>{itemName}</Highlight> have been added to the shopping list!</Message>;

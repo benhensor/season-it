@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useProduceList } from '../../context/ProduceListContext'
 import { useShoppingList } from '../../context/ShoppingListContext'
 import styled from 'styled-components'
@@ -50,16 +50,26 @@ const DisplayWindow = styled.div`
 `
 
 
-export default function Display({ placeholder, selectedItem, selectItem, display, handleRemoveFromShoppingList }) {
+export default function Display({ placeholder, selectedItem, selectItem, display, filteredProduceType, handleRemoveFromShoppingList }) {
 
   const { produceList } = useProduceList()
   const { shoppingList } = useShoppingList()
+
+  const [displayProduce, setDisplayProduce] = useState(produceList)
+
+
+  useEffect(() => {
+    if (filteredProduceType) {
+      setDisplayProduce(produceList.filter(produce => produce.type === filteredProduceType))
+    } else {
+      setDisplayProduce(produceList)
+    }
+  }, [filteredProduceType, produceList])
 
   function removeItem(listing) {
     handleRemoveFromShoppingList(listing)
   }
 
-  
 
   return (
     <Container>
@@ -67,9 +77,9 @@ export default function Display({ placeholder, selectedItem, selectItem, display
     
       {!display ? (
         <DisplayWindow>
-          {produceList.length > 0 && (
+          {displayProduce.length > 0 && (
             <>
-              {produceList.map((produce) => (
+              {displayProduce.map((produce) => (
                 <ProduceCard 
                   key={produce.id}
                   produce={produce}   
