@@ -43,6 +43,7 @@ export default function App() {
   const [selectedItem, setSelectedItem] = useState([])
   const [display, setDisplay] = useState(false)
   const [placeholder, setPlaceholder] = useState(true)
+  const [resetSelect, setResetSelect] = useState(false)
   const [filteredProduceType, setFilteredProduceType] = useState(null)
 
 
@@ -51,6 +52,7 @@ export default function App() {
     if (shoppingList.length === 1 && shoppingList[0].item.name === listing.item.name) {
       setMessage(<Messages type='default' />)
       setPlaceholder(true)
+      setResetSelect(false)
       clearShoppingList()
     } else {
       removeFromShoppingList((listing))
@@ -63,10 +65,9 @@ export default function App() {
     setMessage(<Messages type='current' currentMonth={currentMonth} />)
     updateProduceList(formatData(currentMonth))
     setDisplay(false)
-    const select = document.querySelector('select')
-    select.selectedIndex = 0
     setPlaceholder(false)
     setMonth(currentMonth)
+    setResetSelect(true)
   }
 
 
@@ -77,6 +78,7 @@ export default function App() {
     setDisplay(false)
     setPlaceholder(false)
     setMonth(selectedMonth)
+    setResetSelect(false)
   }
 
 
@@ -104,65 +106,56 @@ export default function App() {
   // Clears the current display 
   function reset() {
     updateProduceList([])
-    const select = document.querySelector('select')
-    select.selectedIndex = 0
     setMessage(<Messages type='default' />)
     setDisplay(false)
     setSelectedItem([])
     setPlaceholder(true)
     clearShoppingList()
+    setResetSelect(true)
   }
 
   
   // Checks for duplicates before adding to selected items
   function addToSelected(target) {
-    const itemIndex = selectedItem.indexOf(target)
-    const tempSelected = [...selectedItem]
-    if ( itemIndex === -1 ) {
-      tempSelected.push(target)
-      setSelectedItem(tempSelected)
+    if (selectedItem.includes(target)) {
+      setSelectedItem(selectedItem.filter(item => item !== target));
     } else {
-      const updatedItems = selectedItem.filter((item) => item !== target)
-      setSelectedItem(updatedItems)
+      setSelectedItem([...selectedItem, target]);
     }
   }
 
 
   // handles item selection
   function selectItem(produce) {
-    const itemName = produce.name.trim()
-    const currentMonthProduce = formatData(currentMonth)
-    const endsInS = itemName[itemName.length - 1] === 's' ? true : false
-    const previousMessage = message
+    const itemName = produce.name.trim();
+    const currentMonthProduce = formatData(currentMonth);
+    const endsInS = itemName.endsWith('s');
+    const previousMessage = message;
+  
+    // Function to handle message setting and timeout
+    const handleTimeoutMessage = (type) => {
+      setMessage(<Messages type={type} itemName={itemName} />);
+      setTimeout(() => {
+        setMessage(previousMessage);
+      }, 1000);
+    };
+  
     // Check for duplicates
     if (shoppingList.some(item => item.item.name === itemName)) {
-      if (endsInS) {
-        setMessage(<Messages type='duplicateEndsInS' itemName={itemName} />)
-        setTimeout(() => {
-          setMessage(previousMessage)
-        }, 1000);
-        return;
-      } else {
-        setMessage(<Messages type='duplicateNoS' itemName={itemName} />)
-        setTimeout(() => {
-          setMessage(previousMessage)
-        }, 1000);
-        return;
-      }
+      handleTimeoutMessage(endsInS ? 'duplicateEndsInS' : 'duplicateNoS');
+      return;
     }
+  
     // Check if item is in season
     if (!currentMonthProduce.some(item => item.name === itemName)) {
-      if (endsInS) {
-        setMessage(<Messages type='errorEndsInS' itemName={itemName} />)
-        return
-      } else {
-        setMessage(<Messages type='errorNoS' itemName={itemName} />)
-        return
-      }
+      handleTimeoutMessage(endsInS ? 'errorEndsInS' : 'errorNoS');
+      return;
     } 
-    addToShoppingList(produce)
-    addToSelected(produce.name)
+  
+    addToShoppingList(produce);
+    addToSelected(produce.name);
   }
+  
 
 
   return (
@@ -170,6 +163,7 @@ export default function App() {
       <Container className="main">
         <Header />
           <NavBar
+            resetSelect={resetSelect}
             currentMonth={currentMonth}
             showCurrent={showCurrent}
             showShoppingList={showShoppingList}

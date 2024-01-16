@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -31,23 +31,30 @@ const Option = styled.option`
   border-radius: 0.3rem;
 `
 
-export default function SelectMonth({ showMonthly }) {
+export default function SelectMonth({ resetSelect, showMonthly }) {
 
-  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October','November', 'December', '']
-  const excludeFinalIndex = months.slice(0, -1)
+  const selectRef = useRef()
 
+  const months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October','November', 'December']
+
+  useEffect(() => {
+    if (resetSelect && selectRef.current) {
+      selectRef.current.value = ''
+    }
+  }, [resetSelect])
 
   return (
     <Container>
       <form action="">
         <Select
+            ref={selectRef}
             name="date"
             type="date"
             onChange={(e) => showMonthly(e.target.value)}
         >
             <Option value="">Select a month</Option>
-            {excludeFinalIndex.map((month, index) => (
-              <Option key={index} value={month.value}>{month}</Option>
+            {months.map((month, index) => (
+              <Option key={index} value={month}>{month}</Option>
             ))}
         </Select>
       </form>

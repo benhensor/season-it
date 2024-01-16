@@ -19,7 +19,7 @@ const Line = styled.div`
   outline: 1px solid #147900;
 `
 
-export default function NavBar({ months, showCurrent, showShoppingList, reset, showMonthly }) {
+export default function NavBar({ resetSelect, showCurrent, showShoppingList, reset, showMonthly }) {
 
   return (
     <Nav>
@@ -29,7 +29,7 @@ export default function NavBar({ months, showCurrent, showShoppingList, reset, s
         reset={reset}
       />
       <SelectMonth
-        months={months}
+        resetSelect={resetSelect}
         showMonthly={showMonthly}
       />
       <Line />
