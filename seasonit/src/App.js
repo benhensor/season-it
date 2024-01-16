@@ -34,7 +34,7 @@ export default function App() {
   const currentMonth = new Date().toLocaleString('default', { month: 'long' });
 
   // Context
-  const { produceList, updateProduceList } = useProduceList();
+  const { updateProduceList } = useProduceList();
   const { shoppingList, addToShoppingList, removeFromShoppingList, clearShoppingList } = useShoppingList();
 
   // State

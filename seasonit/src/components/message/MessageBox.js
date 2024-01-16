@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { useProduceList } from '../../context/ProduceListContext'
 import { useShoppingList } from '../../context/ShoppingListContext'
 import { Messages } from '../messages/Messages'
 
