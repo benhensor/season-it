@@ -9,7 +9,7 @@ import Image from '../../assets/seasons-banner3.jpeg'
 const Container = styled.div`
   width: 100%;
   height: 100svh;
-  padding-bottom: 24.5rem;
+  padding-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
