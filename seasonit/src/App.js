@@ -22,8 +22,9 @@ const AppContainer = styled.div`
   overflow: hidden;
   @media screen and (max-width: 768px) {
     width: 100%;
-    height: calc(100vh - 7rem);
-
+    height: calc(100vh - 5rem);
+    border-radius: 0;
+    border: none;
   }
 `
 
