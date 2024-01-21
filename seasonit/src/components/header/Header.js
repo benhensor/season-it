@@ -15,6 +15,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    justify-content: center;
+  }
 `
 
 const LogoImg = styled.img`

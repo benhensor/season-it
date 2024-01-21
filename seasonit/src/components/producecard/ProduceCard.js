@@ -26,8 +26,9 @@ const Container = styled.div`
 `
 
 const ProduceImg = styled.img`
-  min-width: 5rem;
-  height: 5rem;
+  max-width: 5rem;
+  max-height: 5rem;
+  aspect-ratio: 1/1;
   object-fit: cover;
   object-position: center;
   border: 2px solid #2d5e23;

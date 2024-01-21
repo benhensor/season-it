@@ -15,7 +15,7 @@ const GlobalStyles = createGlobalStyle`
     }
     html {
         font-size: 1.6rem;
-        height: 100svh;
+        min-height: 100svh;
         width: 100%;
         scroll-behavior: none;
     }
@@ -25,10 +25,24 @@ const GlobalStyles = createGlobalStyle`
             #ffffff,
             #d9d9d9
         );
+        max-width: 35rem;
+        height: 100%;
+        margin: 0 auto;
     }
     button {
         cursor: pointer;
     }
+
+    /* Define Media Queries */
+    @media screen and (max-width: 768px) {
+        /* Styles for small devices */
+        body {
+            max-width: 100%;
+            max-height: 75rem;
+            margin: 0 auto;
+        }
+    }
+
 `
 
 export default GlobalStyles

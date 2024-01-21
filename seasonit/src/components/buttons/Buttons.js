@@ -6,6 +6,11 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 768px) {
+    justify-content: space-around;
+    gap: 1rem;
+  }
 `
 
 const Button = styled.button`

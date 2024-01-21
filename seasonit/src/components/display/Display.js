@@ -8,7 +8,7 @@ import Image from '../../assets/seasons-banner3.jpeg'
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100svh;
   padding-bottom: 24.5rem;
   display: flex;
   flex-direction: column;
@@ -26,9 +26,9 @@ const Placeholder = styled.img`
   ${({$visible}) => $visible && `
     display: block;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     object-fit: cover;
-    object-position: calc(50% + 5rem);
+    object-position: center;
     z-index: 0;
   `}
 `
