@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { useShoppingList } from '../../context/ShoppingListContext'
 
-const Container = styled.div`
+const Container = styled.li`
   display: flex;
   align-items: center;
   width: 100%;
@@ -28,21 +28,27 @@ const Container = styled.div`
   `}
 `
 
-const ShoppingImg = styled.img`
-  min-width: 5rem;
-  height: 5rem;
-  object-fit: cover;
-  object-position: center;
-  border: 2px solid #2d5e23;
+const ShoppingImg = styled.div`
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  overflow: hidden;
   margin-right: 1rem;
-  transition: all 0.2s ease-in-out;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid #2d5e23;
+    transition: all 0.2s ease-in-out;
+  }
 `
 
 const ShoppingText = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex: 1;
   align-items: center;
   justify-content: space-between;
   background-color: transparent;  
@@ -100,7 +106,7 @@ export function ShoppingCard({ listing, removeItem }) {
       onClick={() => toggleMarked(item.name)}
     >
       
-        <ShoppingImg src={item.img} alt={item.name} />
+        <ShoppingImg><img src={item.img} alt={item.name} /></ShoppingImg>
       
       <ShoppingText>
         <ProduceName>{item.name}</ProduceName>

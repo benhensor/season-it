@@ -7,35 +7,10 @@ import ShoppingCard from '../shoppingcard/ShoppingCard'
 import Image from '../../assets/seasons-banner3.jpeg'
 
 const Container = styled.div`
-  width: 100%;
-  height: 100svh;
-  padding-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom-left-radius: 2rem;
-  border-bottom-right-radius: 2rem;
   background-color: #3A452A;
-  position: relative;
-`
-
-const Placeholder = styled.img`
-  position: absolute;
-  display: none;
-  z-index: 0;
-  ${({$visible}) => $visible && `
-    display: block;
-    width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: 0;
-  `}
-`
-
-const DisplayWindow = styled.div`
-  width: 100%;
-  z-index: 2;
   overflow-y: scroll;
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -47,6 +22,24 @@ const DisplayWindow = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
+`
+
+const Placeholder = styled.img`
+  display: block;
+  width: 100%;
+  aspect-ratio: 1/2;
+  object-fit: cover;
+  object-position: center;
+  overflow: hidden;
+  z-index: 0;
+`
+
+const DisplayWindow = styled.ul`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  z-index: 2;
 `
 
 
@@ -73,7 +66,9 @@ export default function Display({ placeholder, selectedItem, selectItem, display
 
   return (
     <Container>
-    <Placeholder $visible={placeholder ? 1 : 0} src={Image} alt="Fruit & Veg" />
+    {placeholder && (
+      <Placeholder src={Image} alt="Fruit & Veg" />
+    )}
     
       {!display ? (
         <DisplayWindow>

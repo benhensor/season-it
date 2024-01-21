@@ -5,16 +5,16 @@ import Logo from '../../assets/logo.png'
 const StyledHeader = styled.header`
   width: 100%;
   display: flex;
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
-  background-color: #eeeeee;
-  padding: 0.5rem;
+  
+  background-color: #21241f;
+  overflow: hidden;
 `
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  background-color: #eeeeee;
 
   @media screen and (max-width: 768px) {
     justify-content: center;

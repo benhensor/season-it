@@ -11,39 +11,38 @@ import { useProduceList } from './context/ProduceListContext'
 
 
 const AppContainer = styled.div`
-  border: 5px solid #21241f;
+  display: flex;
+  flex-direction: column;
+  width: 35rem;
+  height: 75rem;
+  margin: 0 auto;
   border-radius: 2rem;
+  border: 5px solid #21241f;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
-
+  overflow: hidden;
   @media screen and (max-width: 768px) {
-    border-radius: 0;
-    border: none;
+    width: 100%;
+    height: 100vh;
+
   }
 `
 
 const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  overflow-y: scroll;
   background-color: #21241f;
   @media screen and (min-width: 768px) {
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
-    height: 100svh;
-    box-shadow: none;
-    overflow: hidden;
-    
+    height: 100%;
   }
 
   @media screen and (max-width: 768px) {
     
   }
-`
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
 `
 
 export default function App() {
@@ -106,14 +105,14 @@ export default function App() {
       return setMessage(<Messages type='emptyList' />)
     } else {
       setPlaceholder(false)
-      return setMessage(<Messages type='shoppingList' />)
+      return setMessage(<Messages type='shoppingList' shoppingList={shoppingList}/>)
     }
   }
 
 
   // Displays the shopping list
   function showShoppingList() {
-    setMessage(<Messages type='shoppingList' shoppingList={shoppingListMessage(shoppingList)} />)
+    shoppingListMessage(shoppingList)
     setDisplay(true)
     setSelectedItem([])
     updateProduceList([])
@@ -178,37 +177,34 @@ export default function App() {
   return (
     <AppContainer>
     <Header />
-      <Main>
-        <Container className="main">
-          
-            <NavBar
-              resetSelect={resetSelect}
-              currentMonth={currentMonth}
-              showCurrent={showCurrent}
-              showShoppingList={showShoppingList}
-              reset={reset}
-              showMonthly={showMonthly}
-            />
-            <MessageBox
-              month={month}
-              message={message}
-              setMessage={setMessage}
-              Messages={Messages}
-              placeholder={placeholder}
-              display={display}
-              setFilteredProduceType={setFilteredProduceType}
-              reset={reset}
-            />
-            <Display
-              placeholder={placeholder}
-              shoppingList={shoppingList}
-              selectedItem={selectedItem}
-              selectItem={selectItem}
-              display={display}
-              filteredProduceType={filteredProduceType}
-              handleRemoveFromShoppingList={handleRemoveFromShoppingList}
-            />
-        </Container>
+      <Main>          
+        <NavBar
+          resetSelect={resetSelect}
+          currentMonth={currentMonth}
+          showCurrent={showCurrent}
+          showShoppingList={showShoppingList}
+          reset={reset}
+          showMonthly={showMonthly}
+        />
+        <MessageBox
+          month={month}
+          message={message}
+          setMessage={setMessage}
+          Messages={Messages}
+          placeholder={placeholder}
+          display={display}
+          setFilteredProduceType={setFilteredProduceType}
+          reset={reset}
+        />
+        <Display
+          placeholder={placeholder}
+          shoppingList={shoppingList}
+          selectedItem={selectedItem}
+          selectItem={selectItem}
+          display={display}
+          filteredProduceType={filteredProduceType}
+          handleRemoveFromShoppingList={handleRemoveFromShoppingList}
+        />
       </Main>
     </AppContainer>
   )

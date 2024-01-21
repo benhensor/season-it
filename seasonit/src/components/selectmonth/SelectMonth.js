@@ -21,7 +21,7 @@ const Select = styled.select`
 `
 
 const Option = styled.option`
-  text-align: left;
+  text-align: center;
   height: 4rem;
   font-size: 1.2rem;
   color: #333;
